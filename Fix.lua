@@ -1,3 +1,4 @@
+--Anti Crash for functions
 getLoader = function()
   if _ENV then
     return "load"
@@ -50,4 +51,21 @@ function string.char(...)
     end
   end
   return _g.string.char(table.unpack(Args))
+end
+
+function string.dump(func, strip)
+  strip = strip or false
+  local Func, needFix = nil, false
+  if type(Func) ~= "function" then
+    print("not a function, Fixes starting..")
+    needFix = true
+  end
+  if type(func) == "string" then
+    local Call, err = load(func)
+    if Call then
+      Func = Call
+    else
+      print("string.dump -> error when fixing arg[1] : " .. err)
+    end
+  end -- TODO
 end
